@@ -1,0 +1,30 @@
+function prova_level_set
+
+
+n=1000;
+
+x = zeros(1,n);
+y = x;
+
+for i = 1:n+1
+    
+    x(i) = (2 + cos(20*pi*i/n))*(cos(2*pi*i/n));
+    y(i) = (2 + cos(20*pi*i/n))*(sin(2*pi*i/n));
+end
+
+plot(x,y);
+
+end
+
+
+nf = 100;
+
+xx = linspace(-5,5,nf);
+yy = xx;
+f = zeros (nf,nf);
+
+for i=1:nf
+    for j=1:nf
+        
+        f(i,j) = xx(i)^2 + yy(j)^2 - (2+cos(10*arctg(yy(j)/xx(i))));
+        

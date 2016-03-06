@@ -1,0 +1,18 @@
+cdfunction z_frames(N_frames)
+
+
+output_file = '../data/z_frames/';
+data = '../data/unknowns/';
+
+for i = 0:N_frames
+
+is = int2str(i+10000);
+plot_unknown(1, 1, 0, strcat(data,is));
+caxis([0.8 1.2]);
+axis([-1.1 1.1 -1.1 1.1 0.0 1.3]);
+view([30,50]);
+colorbar;
+print ('-dpng', '-r0', strcat(output_file,is));
+close;
+
+end

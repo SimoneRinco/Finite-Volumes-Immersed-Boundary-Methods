@@ -1,0 +1,14 @@
+[grid_parameters]
+
+Nx = 200
+Ny = 100
+k = 0.1414
+
+x_min = -10.0
+x_max = 10.0
+y_min = -5.0
+
+[]
+[equations_parameters]
+
+N_equations = 3
