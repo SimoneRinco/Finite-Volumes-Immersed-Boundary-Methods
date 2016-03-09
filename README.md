@@ -9,12 +9,13 @@ in any way. If you are one my colleagues please leave this page because it is em
 ### Compile the code
 You told me you have Linux and by chance this could run ONLY on Linux (just the tip of the iceberg about why this code is awful).
 Executes the commands ($ represents the command line)  
+$ mkdir lib  
 $ cd example  
 $ make  
 
 You'll be prompted a huge amount of incomprehensible warnings. Just discard them.  
 ### Run the simulation  
-Create the directory example/data/unknowns (the program is so stupid that does not check if the directory exist and will not save any data!!!).
+Create the directory example/data/unknowns (the program is so stupid that does not check if the directory exists and will not save any data if it is the case!!!).
 Execute the process  
 $ ./example  
 The program will display some info and for no reason will wait for an input. Just type a random string and press Enter.
