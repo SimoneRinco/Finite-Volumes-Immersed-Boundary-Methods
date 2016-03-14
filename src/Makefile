@@ -1,4 +1,5 @@
-I_DIR = ../include 
+I_DIR = ../include
+I_DIR2 = ..
 LIB_DIR = ../lib
 LIB_NAME = libgrid.a
 
@@ -17,12 +18,18 @@ GRID_OBJS = compare.o cell.o boundary.o grid.o find_label.o relative_position.o 
 		grid_boundary_conditions.o \
 		wet_unknown.o ghost_unknown.o unknown.o
 		
-lib: $(GRID_OBJS)
-	ar -cr $(LIB_DIR)/$(LIB_NAME) $^ 
+EIGEN_LIB = ../libs/Eigen 
+
+
+lib: $(GRID_OBJS) $(EIGEN_LIB)
+	ar -cr $(LIB_DIR)/$(LIB_NAME) $(GRID_OBJS) 
+
+$(EIGEN_LIB):
+	tar -xf ../libs/Eigen.tgz -C ../libs
 
 clean: 
 	-rm *.o
 	-rm $(LIB_DIR)/*
 
 $(GRID_OBJS): %.o : %.cpp
-	g++ -c $< -I$(I_DIR) $(FLAGS)		
+	g++ -c $< -I $(I_DIR) -I $(I_DIR2) $(FLAGS)		

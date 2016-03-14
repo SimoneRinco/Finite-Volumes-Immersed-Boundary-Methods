@@ -1,10 +1,3 @@
-/*
- * immersed_boundary.hpp
- *
- *  Created on: 14/nov/2011
- *      Author: ubuntu
- */
-
 #ifndef IMMERSED_BOUNDARY_HPP_
 #define IMMERSED_BOUNDARY_HPP_
 
@@ -14,7 +7,7 @@
 #include <list>
 #include <vector>
 #include <cmath>
-#include <Eigen/Dense>
+#include <libs/Eigen/Dense>
 
 namespace IMMERSED_BOUNDARY
 {

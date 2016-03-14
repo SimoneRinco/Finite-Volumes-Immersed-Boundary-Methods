@@ -4,6 +4,7 @@
 
 I_DIR1 = ../include
 I_DIR2 = ./ 
+I_DIR3 = ../
 LIB_DIR = ../lib
 
 LIBNAME = grid
@@ -26,10 +27,10 @@ $(EXAMPLE): $(LIB) $(EXAMPLE_OBJ) $(OTHER_OBJS)
 	g++ $(EXAMPLE_OBJ) $(OTHER_OBJS) -o $(EXAMPLE) -L $(LIB_DIR) -l $(LIBNAME) $(FLAGS)
 	
 $(EXAMPLE_OBJ): %.o : %.cpp
-	g++ -c $< -I$(I_DIR1) -I$(I_DIR2) $(FLAGS)
+	g++ -c $< -I$(I_DIR1) -I$(I_DIR2) -I$(I_DIR3) $(FLAGS)
 		
 $(OTHER_OBJS) : %.o : %.cpp
-	g++ -c $< -I$(I_DIR1) -I$(I_DIR2) $(FLAGS)	 	
+	g++ -c $< -I$(I_DIR1) -I$(I_DIR2) -I$(I_DIR3) $(FLAGS)	 	
 		
 $(LIB): 
 	(cd ../src; make lib) 
