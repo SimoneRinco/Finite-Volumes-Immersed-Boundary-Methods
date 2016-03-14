@@ -7,7 +7,7 @@
 #include <list>
 #include <vector>
 #include <cmath>
-#include <libs/Eigen/Dense>
+#include <libs/Eigen/Eigen/Dense>
 
 namespace IMMERSED_BOUNDARY
 {
@@ -75,7 +75,6 @@ template <typename T>
 unsigned int find_in_list(const T& element, const std::list<T>& l);
 double find_zero(const Point2d<double>& c1, const Point2d<double>& c2, const p_fun& p_f, const bool& move_vertical, const double& toll);
 void find_BP_RP_normal(const Point2d<double>& V1, const Point2d<double>& V2, const Point2d<double>& cc, Point2d<double>& BP, Point2d<double>& RP, Point2d<double>& n);
-std::string int2string(const int& n);
 
 }
 

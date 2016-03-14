@@ -1,5 +1,5 @@
-
 #include "grid.hpp"
+#include <string>
 
 
 void grid::writeout_domain(const bool& save_interp_matrices)
@@ -148,7 +148,7 @@ void grid::writeout_domain(const bool& save_interp_matrices)
 	{
 		SW_label = it->first;
 		M4x4 = it->second.reconstructedMatrix();
-		file_name = IMMERSED_BOUNDARY::int2string(n);
+		file_name = std::to_string(n);
 
 		OutFile.open((file_dir + "SW_labels/" + file_name).c_str());
 
@@ -183,7 +183,7 @@ void grid::writeout_domain(const bool& save_interp_matrices)
 		SW_label = it->first;
 		M8x8 = it->second.first.reconstructedMatrix();
 		M4x4 = it->second.second.reconstructedMatrix();
-		file_name = IMMERSED_BOUNDARY::int2string(10000+n);
+		file_name = std::to_string(10000+n);
 
 		OutFile.open((file_dir + "SW_labels/" + file_name).c_str());
 
@@ -232,7 +232,7 @@ void grid::writeout_domain(const bool& save_interp_matrices)
 		SW_label = it->first;
 		M6x6 = it->second.matrices.first.reconstructedMatrix();
 		M3x3 = it->second.matrices.second.reconstructedMatrix();
-		file_name = IMMERSED_BOUNDARY::int2string(10000+n);
+		file_name = std::to_string(10000+n);
 
 		OutFile.open((file_dir + "SW_labels/" + file_name).c_str());
 		OutFile << SW_label(0) <<' ' <<SW_label(1) <<std::endl;

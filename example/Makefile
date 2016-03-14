@@ -10,7 +10,7 @@ LIB_DIR = ../lib
 LIBNAME = grid
 LIB = $(LIB_DIR)/lib$(LIBNAME).a 
 
-FLAGS = -O2 -pg -g
+FLAGS = -O2 -pg -g -std=c++11
 
 # Nome del sorgente di prova (il main): l'eseguibile avrà lo stesso nome
 EXAMPLE = example

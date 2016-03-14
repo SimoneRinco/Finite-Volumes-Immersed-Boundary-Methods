@@ -1,4 +1,5 @@
 #include "finite_volume.hpp"
+#include <string>
 
 int main(int argc, char **argv) {
 
@@ -38,7 +39,7 @@ int main(int argc, char **argv) {
 	initial_conditions(G);
 
 	// salvataggio condizioni iniziali
-	G.writeout_unknowns("./data/unknowns/frame_" + int2string(n_frame));
+	G.writeout_unknowns("./data/unknowns/frame_" + std::to_string(n_frame));
 	n_frame++;
 
 
@@ -50,7 +51,7 @@ int main(int argc, char **argv) {
 		{
 			// (1) Salvataggio incognite (medie di cella nelle wet cells)
 			cout<<"Salvataggio numero " <<n_frame <<" al tempo " <<t <<endl;
-			G.writeout_unknowns("./data/unknowns/frame_" + int2string(n_frame));
+			G.writeout_unknowns("./data/unknowns/frame_" + std::to_string(n_frame));
 			n_frame++;
 			save_output = false;
 		}
