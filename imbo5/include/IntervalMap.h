@@ -185,29 +185,30 @@ namespace imbo5
                             //                  ^                          ^
                             //              min_lb_it                  sup_lb_it
                             //
-                            // min in (21, 32], sup in (78, 81]
+                            // min in (21, 32], sup in (72, 81]
 
                             if (sup < sup_lb_it->first)
                             {
                                 --min_lb_it;
+                                --sup_lb_it;
+                                T new_sup = std::max(sup, sup_lb_it->second);
                                 if (!(min_lb_it->second < min))
                                 {
-                                    min_lb_it->second = sup;
-                                    ++min_lb_it;
-                                    _intervals_map.erase(min_lb_it, sup_lb_it);
+                                    min_lb_it->second = new_sup;
+                                    _intervals_map.erase(++min_lb_it, ++sup_lb_it);
                                 }
                                 else
                                 {
                                     ++min_lb_it;
                                     if (min < min_lb_it->first)
                                     {
-                                        _intervals_map.erase(min_lb_it, sup_lb_it);
-                                        _intervals_map.insert(MapEntry(min, sup));
+                                        _intervals_map.erase(min_lb_it, ++sup_lb_it);
+                                        _intervals_map.insert(MapEntry(min, new_sup));
                                     }
                                     else
                                     {
-                                        min_lb_it->second = sup;
-                                        _intervals_map.erase(++min_lb_it, sup_lb_it);
+                                        min_lb_it->second = new_sup;
+                                        _intervals_map.erase(++min_lb_it, ++sup_lb_it);
                                     }
                                 }
                             }

@@ -1,11 +1,24 @@
 #include "IntervalMap.h"
 #include <gtest/gtest.h>
 #include <vector>
+#include <cstdlib>
 
 using IntervalVector = std::vector<imbo5::Interval<int>>;
 using IntervalInt = IntervalVector::value_type;
 
-void expect_eq_intervals(const IntervalVector& expected, const imbo5::IntervalMap<int>& im)
+
+std::ostream& operator <<(std::ostream& os, const IntervalVector& iv)
+{
+    for (const auto i : iv)
+        os << "[" << i.min << ", " << i.sup << ") ";
+    return os;
+}
+
+void expect_eq_intervals(
+    const IntervalVector& expected,
+    const imbo5::IntervalMap<int>& im,
+    const IntervalVector& sequence
+)
 {
     IntervalVector actual;
     im.copy_intervals(std::back_inserter(actual));
@@ -14,70 +27,60 @@ void expect_eq_intervals(const IntervalVector& expected, const imbo5::IntervalMa
 
     for (std::size_t i = 0; i < size; ++i)
     {
-        EXPECT_EQ(expected[i].min, actual[i].min) << "Test interval min equality";
-        EXPECT_EQ(expected[i].sup, actual[i].sup) << "Test interval sup equality";
+        int expected_values[2] = {expected[i].min, expected[i].sup};
+        int actual_values[2] = {actual[i].min,actual[i].sup};
+        for (int j = 0; j < 2; ++j)
+        {
+            EXPECT_EQ(expected_values[j], actual_values[j]) << "Test interval bound equality: Added sequence\n"
+                 << sequence << "\nExpected: " << expected << "\nActual: " << actual << "\n" ;
+        }    
     }
 }
 
 TEST(IntervalMap, Add)
 {
-    imbo5::IntervalMap<int> interval_map;
+    int n_tests = 10000;
+    const int sup = 1001;
 
+    srand(time(nullptr));
 
-    // 1) Add disjoint intervals to the interval map in different positions
-
-    interval_map.add(13, 21);   // to an empty interval map
-    interval_map.add(6, 9);     // at the beginning
-    interval_map.add(1,3);      // at the beginning again
-    interval_map.add(131,292);  // at the end
-    interval_map.add(45, 49);   // in the middle of the map
-    interval_map.add(40, 44);   // in the middle of the map again
-
-    IntervalVector expected_intervals = 
+    for(; n_tests > 0; --n_tests)
     {
-        IntervalInt(1, 3),
-        IntervalInt(6, 9),
-        IntervalInt(13, 21),
-        IntervalInt(40, 44),
-        IntervalInt(45, 49),
-        IntervalInt(131, 292)
-    };
- 
-    expect_eq_intervals(expected_intervals, interval_map);
+        imbo5::IntervalMap<int> interval_map;
+        std::vector<int> data(sup, 0); // data[i] = 1 if i is present the map, 0 otherwise    
+        IntervalVector sequence;        
+        int n_intervals = rand() % 30 + 5; // random number of intervals to add in range [5, 35)
+        for (int intervals = 0; intervals < n_intervals;)
+        {
+            int min_i = rand() % sup;
+            int sup_i = rand() % sup;  
 
-    // 2) Add overlapping intervals at the beginning
-    interval_map.add(-10, 1);   // join the first interval removing [1, 3)
-    interval_map.add(-11, 16);  // remove [6, 9) and [13, 21)
+            if (min_i < sup_i)
+            {
+                interval_map.add(min_i, sup_i);
+                sequence.push_back(IntervalInt(min_i, sup_i));
+                for (int i = min_i; i < sup_i; ++i)
+                    data[i] = 1;
+                ++intervals;
+            }
+        }
     
-    expected_intervals = 
-    {
-        IntervalInt(-11, 21),
-        IntervalInt(40, 44),
-        IntervalInt(45, 49),
-        IntervalInt(131, 292)
-    };
+        IntervalVector expected_intervals;
+        for (int i = 0; i < sup;)
+        {
+            if (data[i] == 1)
+            {
+                int j = i;
+                for (; data[j] == 1; ++j);
+                expected_intervals.push_back(IntervalInt(i, j));
+                i = j + 1;
+            }
+            else
+                ++i;
+        }
 
-    expect_eq_intervals(expected_intervals, interval_map);
-
-    interval_map.add(-11, 300);
-    expected_intervals =
-    {
-        IntervalInt(-11, 300)
-    };
-    
-    expect_eq_intervals(expected_intervals, interval_map);
-
-    interval_map.add(301, 302);
-    interval_map.add(307, 314);
-    interval_map.add(-12, 308);
-
-    expected_intervals =
-    {
-        IntervalInt(-12, 314)
-    };
-
-    expect_eq_intervals(expected_intervals, interval_map);
-
+        expect_eq_intervals(expected_intervals, interval_map, sequence);
+    }
 }
 
 int main(int argc, char **argv)
