@@ -33,7 +33,7 @@ void expect_eq_intervals(
         {
             EXPECT_EQ(expected_values[j], actual_values[j]) << "Test interval bound equality: Added sequence\n"
                  << sequence << "\nExpected: " << expected << "\nActual: " << actual << "\n" ;
-        }    
+        }
     }
 }
 
@@ -47,8 +47,8 @@ TEST(IntervalMap, Add)
     for(; n_tests > 0; --n_tests)
     {
         imbo5::IntervalMap<int> interval_map;
-        std::vector<int> data(sup, 0); // data[i] = 1 if i is present the map, 0 otherwise    
-        IntervalVector sequence;        
+        std::vector<int> data(sup, 0); // data[i] = 1 if i is present the map, 0 otherwise
+        IntervalVector sequence;
         int n_intervals = rand() % 30 + 5; // random number of intervals to add in range [5, 35)
         for (int intervals = 0; intervals < n_intervals;)
         {

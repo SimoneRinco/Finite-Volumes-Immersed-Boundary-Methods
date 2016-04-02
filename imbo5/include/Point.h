@@ -1,5 +1,16 @@
 #pragma once
 
+#define COMPONENT_ACCESSORS(name, component) \
+const T& name() const           \
+{                               \
+    return at<component>();     \
+}                               \
+                                \
+T& name()                       \
+{                               \
+    return at<component>();     \
+}
+
 namespace imbo5
 {
     template<class T, unsigned int N>
@@ -34,6 +45,10 @@ namespace imbo5
             return const_cast<T&>(static_cast<const Point<T, N>&>(*this).at<M>());
         }
 
+        COMPONENT_ACCESSORS(x, 0)
+        COMPONENT_ACCESSORS(y, 1)
+        COMPONENT_ACCESSORS(z, 2)
+                
     private:
         T _data[N];
     };

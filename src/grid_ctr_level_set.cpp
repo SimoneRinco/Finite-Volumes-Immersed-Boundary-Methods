@@ -1,25 +1,26 @@
-/*
- * grid_ctr_level_set.cpp
- *
- *  Created on: 30/nov/2011
- *      Author: ubuntu
- */
-
 #include "grid.hpp"
+#include "Config.hpp"
+#include <fstream>
 
 grid::grid(const IMMERSED_BOUNDARY::p_fun& p_f, const IMMERSED_BOUNDARY::p_grad_fun& p_grad_f, const std::string& input_f, const p_comp& comp_function):
-	if_parameters(input_f.c_str()),
-	Nx(if_parameters("grid_parameters/Nx",0)),
-	Ny(if_parameters("grid_parameters/Ny",0)),
-	N_equations(if_parameters("equations_parameters/N_equations",0)),
-	x(Nx+3),
-	y(Ny+3),
 	cells(comp_function),
 	ghost_cells(comp_function),
 	all_wet_matrices(comp_function),
 	GPs_Matrices(comp_function),
 	noGPs_Matrices(comp_function)
 {
+    Config config;
+    config.load(input_f);
+
+    Nx = config.nx;
+    Ny = config.ny;
+    N_equations = config.n_equations;
+    const double x_min = config.x_min;
+    const double x_max = config.x_max;
+    const double y_min = config.y_min;
+    const double k = config.k;
+    x.resize(Nx + 3);
+    y.resize(Ny + 3);
 
 using namespace IMMERSED_BOUNDARY;
 
@@ -27,12 +28,6 @@ using namespace IMMERSED_BOUNDARY;
 std::map<label, IMMERSED_BOUNDARY::Edge, p_comp> single_edges(comp_function);
 std::map<label, IMMERSED_BOUNDARY::Edge, p_comp> first_edge(comp_function);
 
-const double k = if_parameters("grid_parameters/k",0.25);
-
-const double x_min = if_parameters("grid_parameters/x_min",0.0);
-const double x_max = if_parameters("grid_parameters/x_max",0.0);
-const double y_min = if_parameters("grid_parameters/y_min",0.0);
-// const double y_max = if_parameters("grid_parameters/y_max",0.0);
 
 Point2d<double> P, wet_center, dry_center1, dry_center2;
 Point2d<double> zero;

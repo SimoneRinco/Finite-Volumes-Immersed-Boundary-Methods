@@ -1,12 +1,4 @@
-/*
- * grid.hpp
- *
- *  Created on: 08/nov/2011
- *      Author: ubuntu
- */
-
-#ifndef GRID_HPP_
-#define GRID_HPP_
+#pragma once
 
 #include <map>
 #include <set>
@@ -15,10 +7,7 @@
 #include <string>
 #include "algorithm"
 #include "cell.hpp"
-#include "Point2d.hpp"
-#include "Point2d_def.hpp"
 #include "boundary.hpp"
-#include "Getpot.hpp"
 #include "immersed_boundary.hpp"
 #include "find_in_list_def.hpp"
 
@@ -32,8 +21,8 @@ public:
 	friend class ghost_unknown;
 
 	// constructors and destructor
-	grid(const std::string& input_f = "./input_parameters.pot", const std::string& vertices_f = "./vertices.pot", const p_comp& comp_function = IMMERSED_BOUNDARY::compare);
-	grid(const IMMERSED_BOUNDARY::p_fun& p_f, const IMMERSED_BOUNDARY::p_grad_fun& p_grad_f, const std::string& input_f = "./input_parameters.pot" , const p_comp& comp_function = IMMERSED_BOUNDARY::compare);
+	grid(const std::string& input_f, const std::string& vertices_f, const p_comp& comp_function = IMMERSED_BOUNDARY::compare);
+	grid(const IMMERSED_BOUNDARY::p_fun& p_f, const IMMERSED_BOUNDARY::p_grad_fun& p_grad_f, const std::string& input_f, const p_comp& comp_function = IMMERSED_BOUNDARY::compare);
 	grid(const grid&);
 	~grid();
 
@@ -89,9 +78,6 @@ public:
 	//std::pair<label,Point2d<double> >* get_vertex(const unsigned int&);
 
 private:
-
-	GetPot if_parameters;
-	GetPot if_vertices;
 
 	unsigned int Nx; // number of effective cells in x direction (total cells: Nx + 2 not cutted and dry cells)
 	unsigned int Ny;
@@ -156,4 +142,3 @@ private:
 
 };
 
-#endif /* GRID_HPP_ */

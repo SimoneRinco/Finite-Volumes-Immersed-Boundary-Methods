@@ -19,6 +19,13 @@ public:
 	Point2d(const T& first,const T& second);
 	Point2d(const Point2d&);
 	~Point2d();
+
+    template<class Archive>
+    void serialize(Archive& ar)
+    {
+        ar(first, second);
+    }
+
 	void operator= (const Point2d&);
 	bool operator== (const Point2d&);
 	bool operator== (const Point2d&) const;

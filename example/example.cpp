@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
 	using namespace IMMERSED_BOUNDARY;
 	using namespace FINITE_VOLUME;
 
-	grid G;
+	grid G("config.json", "domain.json");
 	const vector<label>& WC(G.get_wet_cells());
 	unsigned int n_frame = 0;
 	const double CFL = 0.5;

@@ -7,7 +7,7 @@
 #include <list>
 #include <vector>
 #include <cmath>
-#include <libs/Eigen/Eigen/Dense>
+#include <Eigen/Dense>
 
 namespace IMMERSED_BOUNDARY
 {

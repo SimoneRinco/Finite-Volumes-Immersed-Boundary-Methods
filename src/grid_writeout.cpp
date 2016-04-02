@@ -1,6 +1,6 @@
 #include "grid.hpp"
 #include <string>
-
+#include <fstream>
 
 void grid::writeout_domain(const bool& save_interp_matrices)
 
@@ -9,7 +9,7 @@ void grid::writeout_domain(const bool& save_interp_matrices)
 
 	using namespace std;
 	cout.setf(ios::scientific, ios::floatfield);
-	ofstream OutFile;
+	std::ofstream OutFile;
 
 	//
 	std::cout<<"Salvo vettore x\n";

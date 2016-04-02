@@ -1,11 +1,5 @@
-/*
- * grid_join_edges.cpp
- *
- *  Created on: 02/dic/2011
- *      Author: ubuntu
- */
-
 #include "grid.hpp"
+#include <fstream>
 
 void set_min_and_positions (const IMMERSED_BOUNDARY::label& adj_label, const IMMERSED_BOUNDARY::position& adj_pos, IMMERSED_BOUNDARY::position& next_cell_pos, const Point2d<double>& current_Vertex, Point2d<double>*& next_Vertex, Point2d<double>*& new_Vertex, double& min_dist, std::map<IMMERSED_BOUNDARY::label, IMMERSED_BOUNDARY::Edge, IMMERSED_BOUNDARY::p_comp>& single_edges, std::set<IMMERSED_BOUNDARY::label, IMMERSED_BOUNDARY::p_comp>& considered_labels);
 

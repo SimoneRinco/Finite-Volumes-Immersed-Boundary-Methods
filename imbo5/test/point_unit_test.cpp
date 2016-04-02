@@ -1,11 +1,24 @@
 #include "Point.h"
+#include <gtest/gtest.h>
+
+#define CHECK_COMPONENT(point, component, expected_value) \
+ASSERT_EQ(point.component(), expected_value) << "Check " #expected_value " component"; \
+
+TEST(Point, Accessors)
+{
+    imbo5::Point<int, 3> p(1, 2, 3);
+
+    CHECK_COMPONENT(p, x, 1);
+    CHECK_COMPONENT(p, y, 2);
+    CHECK_COMPONENT(p, z, 3);
+
+    p.x() = 12;
+
+    CHECK_COMPONENT(p, x, 12);
+}
 
 int main(int argc, char **argv)
 {
-    imbo5::Point<int, 2> p2i(3, 5);
-    bool ok = (p2i.at<0>() == 3);
-    ok = ok && (p2i.at<1>() == 5);
-    p2i.at<1>() = 6;
-    ok = ok && (p2i.at<1>() == 6);
-    return ok ? 0 : 1;
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

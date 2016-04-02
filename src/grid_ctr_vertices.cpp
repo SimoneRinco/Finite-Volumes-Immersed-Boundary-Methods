@@ -1,19 +1,8 @@
-/*
- * grid_ctr_vertices.cpp
- *
- *  Created on: 23/dic/2011
- *      Author: ubuntu
- */
-
 #include "grid.hpp"
+#include "Config.hpp"
+#include "Domain.hpp"
 
 grid::grid(const std::string& input_f, const std::string& vertices_f, const p_comp& comp_function):
-		if_parameters(input_f.c_str()), if_vertices(vertices_f.c_str()),
-		Nx(if_parameters("grid_parameters/Nx",0)),
-		Ny(if_parameters("grid_parameters/Ny",0)),
-		N_equations(if_parameters("equations_parameters/N_equations",0)),
-		x(Nx+3),
-		y(Ny+3),
 		cells(comp_function),
 		ghost_cells(comp_function),
 		all_wet_matrices(comp_function),
@@ -21,6 +10,18 @@ grid::grid(const std::string& input_f, const std::string& vertices_f, const p_co
 		noGPs_Matrices(comp_function)
 
 {
+    Config config;
+    config.load(input_f);
+
+    Nx = config.nx;
+    Ny = config.ny;
+    N_equations = config.n_equations;
+    const double x_min = config.x_min;
+    const double x_max = config.x_max;
+    const double y_min = config.y_min;
+    const double k = config.k;
+    x.resize(Nx + 3);
+    y.resize(Ny + 3);
 
 	using namespace IMMERSED_BOUNDARY;
 
@@ -37,25 +38,16 @@ grid::grid(const std::string& input_f, const std::string& vertices_f, const p_co
 
 	double xv,yv;
 
-	unsigned int N_vertices = if_vertices("Number_of_vertices",0);
+    Domain domain;
+    domain.load(vertices_f);
+
+	unsigned int N_vertices = domain.vertices.size();
 	std::vector<std::pair<label, Point2d<double> > > vertices(N_vertices+1);
-
-
-	//
-
-	const double k = if_parameters("grid_parameters/k",0.25);
-
-	const double x_min = if_parameters("grid_parameters/x_min",0.0);
-	const double x_max = if_parameters("grid_parameters/x_max",0.0);
-	const double y_min = if_parameters("grid_parameters/y_min",0.0);
-	// const double y_max = if_parameters("grid_parameters/level_set/y_max",0.0);
 
 	// acquisizione vertici del dominio originale da file
 	for(int i=0; i<N_vertices; i++)
 	{
-		xv = if_vertices("vertices", 0.0, 2*i);
-		yv = if_vertices("vertices", 0.0, 2*i+1);
-		(vertices.at(i)).second=Point2d<double>(xv,yv);
+		(vertices.at(i)).second=domain.vertices[i];
 	}
 	vertices.at(N_vertices).second=vertices.at(0).second; // ultimo vertice coincide col primo
 

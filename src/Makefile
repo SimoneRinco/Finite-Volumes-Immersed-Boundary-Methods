@@ -1,5 +1,6 @@
 I_DIR = ../include
-I_DIR2 = ..
+I_DIR2 = ../libs/eigen-3.2.8
+I_DIR3 = ../libs/cereal-1.1.2/include
 LIB_DIR = ../lib
 LIB_NAME = libgrid.a
 
@@ -16,20 +17,25 @@ GRID_OBJS = compare.o cell.o boundary.o grid.o find_label.o relative_position.o 
 		grid_public_getters.o grid_public_setters.o \
 		grid_calculate_RP_quantities.o grid_calculate_GP_quantities.o \
 		grid_boundary_conditions.o \
-		wet_unknown.o ghost_unknown.o unknown.o
+		wet_unknown.o ghost_unknown.o unknown.o \
+		Config.o Domain.o
 		
-EIGEN_LIB = ../libs/Eigen 
+EIGEN_LIB = ../libs/eigen-3.2.8 
 
+CEREAL_LIB = ../libs/cereal-1.1.2
 
-lib: $(EIGEN_LIB) $(GRID_OBJS) 
+lib: $(EIGEN_LIB) $(CEREAL_LIB) $(GRID_OBJS) 
 	ar -cr $(LIB_DIR)/$(LIB_NAME) $(GRID_OBJS) 
 
 $(EIGEN_LIB):
-	tar -xf ../libs/Eigen.tar.gz -C ../libs
+	tar -xf ../libs/eigen-3.2.8.tar.gz -C ../libs
 
+$(CEREAL_LIB): 
+	tar -xf ../libs/cereal-1.1.2.tar.gz -C ../libs
 clean: 
-	-rm *.o
-	-rm $(LIB_DIR)/*
-	-rm $(EIGEN_LIB)   
+	rm *.o
+	rm $(LIB_DIR)/*
+	rm -r $(EIGEN_LIB) $(CEREAL_LIB)
+
 $(GRID_OBJS): %.o : %.cpp
-	g++ -c $< -I $(I_DIR) -I $(I_DIR2) $(FLAGS)		
+	g++ -c $< -I $(I_DIR) -I $(I_DIR2) -I $(I_DIR3) $(FLAGS)		
