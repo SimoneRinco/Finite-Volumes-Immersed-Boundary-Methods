@@ -1,13 +1,15 @@
-include (libs)
-
 macro(add_imbo5_test executable_name)
     add_executable(${executable_name}
         ${executable_name}.cpp
     )
     
-    add_dependencies(${executable_name} test_libs)
+    target_include_directories(${executable_name} SYSTEM
+        PUBLIC
+            ${GOOGLE_TEST_INCLUDE}
+    )
+
     target_link_libraries(${executable_name}
-        ${GOOGLE_TEST_LIB_PATH}
+        ${LIB_GOOGLE_TEST}
         pthread
     )
 

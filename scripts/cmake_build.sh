@@ -5,7 +5,7 @@ cmake_source_dir=$1
 build_dir=$2
 
 cd $cmake_source_dir
-mkdir -pv $build_dir
+mkdir -p $build_dir
 cd $build_dir
 cmake ..
 make
