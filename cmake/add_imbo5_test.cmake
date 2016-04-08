@@ -9,6 +9,7 @@ macro(add_imbo5_test executable_name)
     )
 
     target_link_libraries(${executable_name}
+        imbo5
         ${LIB_GOOGLE_TEST}
         pthread
     )

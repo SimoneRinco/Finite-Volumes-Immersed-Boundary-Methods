@@ -1,4 +1,6 @@
 #pragma once
+
+#include "Exception.h"
 #include <map>
 
 namespace imbo5
@@ -37,7 +39,7 @@ namespace imbo5
 
             if (!(min < sup))
             {
-                // TODO throw exception
+               throw Exception("Invalid arguments adding an interval to the IntervalMap");
             }
 
             if (_intervals_map.empty())
