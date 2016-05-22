@@ -30,13 +30,14 @@ namespace imbo5
     {
     public:
 
+        using Map = std::map<T, T>;
+        typedef typename Map::value_type MapEntry;
+
         /*!
-         *  Add interval [min, sup) to the interval set. min must be less than sup
+         *  Add interval [min, sup) to the interval map. min must be less than sup
          */
         void add(const T& min, const T& sup)
         {
-            typedef typename std::map<T, T>::value_type MapEntry;
-
             if (!(min < sup))
             {
                throw Exception("Invalid arguments adding an interval to the IntervalMap");
@@ -291,36 +292,67 @@ namespace imbo5
          */
         bool contains(const T& t) const
         {
+            return get_interval_iterator(t) != _intervals_map.end();
+        }
+
+        /*!
+         *  Return the interval which contains the specified element. Throw an exception if the
+         *  element is not present in the interval map.
+         */
+        MapEntry get_interval(const T& element) const
+        {
+            auto it = get_interval_iterator(element);
+            if (it == _intervals_map.end())
+                throw std::runtime_error("Element not present in the interval map");
+            return *it;
+        }
+
+    protected:
+
+        /*!
+         *  Return an iterator to the interval containing t. Return an iterator
+         *  to the map end if t is not in the interval map
+         */
+        typename Map::const_iterator get_interval_iterator(const T& t) const
+        {
             if (_intervals_map.empty())
-                return false;
+                return _intervals_map.end();
 
             auto it = _intervals_map.lower_bound(t);
             
+            // t = 15
+            // ... [13, x)
             if (it == _intervals_map.end())
             {
                 --it;
-                return t < it->second;
+                if (t < it->second)
+                    return it;
+                else
+                    return _intervals_map.end();
             }
 
-            if (t < it->first)
+            if (it == _intervals_map.begin())
             {
-                if (it == _intervals_map.begin())
-                {
-                    return false;
-                }
+                if (t == it->first)
+                    return it;
                 else
-                {
-                    --it;
-                    return t < it->second;
-                }
+                    return _intervals_map.end();
             }
+
+            // ... [x, y) [15, z)
+            if (t == it->first)
+                return it;
+
+            // ... [10, x) [22, 34) ...
+            --it;
+            if (t < it->second)
+                return it;
+            else
+                return _intervals_map.end();
 
             // avoid warning on some compilers. This line is unreachable
-            return false;
+            return _intervals_map.end();
         }
-
-
-    private:
 
         /*!
          *  The key is the interval minimum and the value the interval sup. Remember that each interval is in the form [)
@@ -330,6 +362,6 @@ namespace imbo5
          *
          *  These requirements are satisfied if the sup of an interval is less than the minimum of the next interval
          */
-         std::map<T, T> _intervals_map;
+         Map _intervals_map;
     };
 }

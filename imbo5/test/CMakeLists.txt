@@ -6,3 +6,4 @@ include_directories(
 
 add_imbo5_test(point_unit_test)
 add_imbo5_test(intervals_unit_test)
+add_imbo5_test(mesh_unit_test)

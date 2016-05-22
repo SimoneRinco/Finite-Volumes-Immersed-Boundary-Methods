@@ -1,6 +1,7 @@
 #include "IntervalMap.h"
 #include <gtest/gtest.h>
 #include <vector>
+#include <array>
 #include <cstdlib>
 
 using IntervalVector = std::vector<imbo5::Interval<int>>;
@@ -83,6 +84,55 @@ TEST(IntervalMap, Add)
     }
 }
 
+TEST(IntervalMap, GetIterator)
+{
+    class TestGetIterator : public imbo5::IntervalMap<int>
+    {
+        public:
+           int dist_from_begin(int i) const
+           {
+                auto it = get_interval_iterator(i);
+                if (it == _intervals_map.end())
+                    return -1;
+                return std::distance(_intervals_map.begin(), it);
+           }
+    };
+
+    std::vector<std::array<int, 2>> intervals
+    {
+        {1, 3},
+        {5, 6},
+        {11, 14},
+        {31, 45}
+    };
+    
+    std::vector<int> expected_results(50, -1); // the value is the expected distance from begin
+    int expected_dist_from_begin = 0;
+    for(const auto& interval : intervals)
+    {
+        for (int i = interval[0];i < interval[1]; ++i)
+        {
+            expected_results[i] = expected_dist_from_begin;
+        }
+
+        ++expected_dist_from_begin; 
+    }
+
+    TestGetIterator test_map;
+    
+    for(const auto& interval : intervals)
+    {
+       test_map.add(interval[0], interval[1]);
+    }
+
+    for(auto i = 0; i < expected_results.size(); ++i)
+    {
+        auto expected_distance = expected_results[i];
+        auto actual_distance = test_map.dist_from_begin(i);
+        EXPECT_EQ(expected_distance, actual_distance) << "Element: " << i << "\n ";
+    }
+} 
+            
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
