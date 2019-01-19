@@ -1,13 +1,5 @@
-/*
- * grid.cpp
- *
- *  Created on: 08/nov/2011
- *      Author: ubuntu
- */
-
 #include "grid.hpp"
 #include "immersed_boundary.hpp"
-
 
 // destructor
 grid::~grid()

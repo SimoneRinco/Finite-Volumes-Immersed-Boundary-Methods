@@ -23,20 +23,31 @@ public:
 
   friend class ghost_unknown;
 
-  // constructors and destructor
-  grid(const std::string& input_f = "./input_parameters.pot", const std::string& vertices_f = "./vertices.pot", const p_comp& comp_function = IMMERSED_BOUNDARY::compare);
-  grid(const IMMERSED_BOUNDARY::p_fun& p_f, const IMMERSED_BOUNDARY::p_grad_fun& p_grad_f, const std::string& input_f = "./input_parameters.pot" , const p_comp& comp_function = IMMERSED_BOUNDARY::compare);
+  /*!
+   * Constructs the grid given the domain vertices
+   */
+  grid(
+    const std::string& input_f,
+    const std::string& vertices_f,
+    const p_comp& comp_function = IMMERSED_BOUNDARY::compare);
+
+  grid(
+    const IMMERSED_BOUNDARY::p_fun& p_f,
+    const IMMERSED_BOUNDARY::p_grad_fun& p_grad_f,
+    const std::string& input_f,
+    const p_comp& comp_function = IMMERSED_BOUNDARY::compare);
+
   grid(const grid&);
   ~grid();
-
 
   // writeout functions (write on files)
 
   void writeout_domain(const bool& save_interp_matrices = true);
   void writeout_BC_type();
-  void writeout_unknowns(const std::string& file_name = "./data/unknowns/unknowns");
+  //void writeout_unknowns(const std::string& file_name = "./data/unknowns/unknowns");
+  void writeout_unknowns(const std::string& file_name);
 
-  // print on terminal functions
+  // print functions
 
   void print_cells();
   void print_cutting_edges();
@@ -74,11 +85,6 @@ public:
   void set_unknown_values(const std::map<label, std::vector<double> >& wet_unknowns);
   void set_BC_type(const unsigned int& BC_type);
   void set_BC_type(const unsigned int& first_edge_number, const unsigned int& last_edge_number, const unsigned int& BC_type);
-
-
-
-
-  //std::pair<label,Point2d<double> >* get_vertex(const unsigned int&);
 
 private:
 

@@ -1,18 +1,35 @@
 #include "finite_volume.hpp"
+#include <string>
+#include <sstream>
 
 int main(int argc, char **argv)
 {
-  using namespace std;
   using namespace IMMERSED_BOUNDARY;
   using namespace FINITE_VOLUME;
 
-  grid G;
-  const vector<label>& WC(G.get_wet_cells());
+  if (argc != 2)
+  {
+    std::cout << "Usage:" << std::endl;
+    std::cout << "example <data_directory>" << std::endl;
+    std::cout << "where <data_directory> is the directory "
+      "containing the input file and where the results of the simulation "
+      "will be stored. Use script setup_dirs.sh to create such a directory";
+    std::cout << std::endl;
+    return 1;
+  }
+
+  const std::string data_dir(argv[1]);
+  const std::string input_file(data_dir + "/input_parameters.pot");
+  const std::string vertices_file(data_dir + "/vertices.pot");
+
+  grid G(input_file, vertices_file);
+
+  const std::vector<label>& WC(G.get_wet_cells());
   unsigned int n_frame = 0;
   const double CFL = 0.5;
   const double dx = G.get_dx(), dy = G.get_dy();
   const double t_final = 5.0;
-  const double dt_out = 0.01;
+  const double dt_out = 0.1;
   double t = 0.0;
   double dt;
 
@@ -37,7 +54,11 @@ int main(int argc, char **argv)
   initial_conditions(G);
 
   // salvataggio condizioni iniziali
-  G.writeout_unknowns("./data/unknowns/frame_" + int2string(n_frame));
+  std::stringstream ss;
+  ss << data_dir << "/data/unknowns/frame_";
+  ss << n_frame;
+
+  G.writeout_unknowns(ss.str());
   n_frame++;
 
   while (t < t_final)
@@ -45,8 +66,11 @@ int main(int argc, char **argv)
     if (save_output)
     {
       // (1) Salvataggio incognite (medie di cella nelle wet cells)
-      cout<<"Salvataggio numero " <<n_frame <<" al tempo " <<t <<endl;
-      G.writeout_unknowns("./data/unknowns/frame_" + int2string(n_frame));
+      std::cout << "Saving number " << n_frame << " at time " << t << std::endl;
+      std::stringstream ss;
+      ss << data_dir << "/data/unknowns/frame_";
+      ss << n_frame;
+      G.writeout_unknowns(ss.str());
       n_frame++;
       save_output = false;
     }
@@ -75,7 +99,7 @@ int main(int argc, char **argv)
     }
 
     t += dt;
-    cout << "dt=" <<dt <<"; t= " <<t <<endl;
+    std::cout << "dt=" << dt <<"; t= " << t << std::endl;
     // (6) calcolo incognite al tempo successivo
     evolution(z, Qx, Qy, new_z, new_Qx, new_Qy, WC, dx, dy, dt);
   }

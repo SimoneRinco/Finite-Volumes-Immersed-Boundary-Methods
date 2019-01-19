@@ -27,7 +27,7 @@ grid::grid(const std::string& input_f, const std::string& vertices_f, const p_co
   std::pair<label,Point2d<double> >* V;
   std::pair<label,Point2d<double> >* V_n; //considered vertex and next vertex
 
-  label Key,L;
+  label Key, L;
   std::vector<label> L_adj(4,label());
   cell C(N_equations);
   std::map<label,Point2d<double> >::iterator it;
@@ -37,51 +37,44 @@ grid::grid(const std::string& input_f, const std::string& vertices_f, const p_co
   double xv,yv;
 
   unsigned int N_vertices = if_vertices("Number_of_vertices",0);
-  std::vector<std::pair<label, Point2d<double> > > vertices(N_vertices+1);
-
-
-  //
+  std::vector<std::pair<label, Point2d<double>>> vertices(N_vertices+1);
 
   const double k = if_parameters("grid_parameters/k",0.25);
 
   const double x_min = if_parameters("grid_parameters/x_min",0.0);
   const double x_max = if_parameters("grid_parameters/x_max",0.0);
   const double y_min = if_parameters("grid_parameters/y_min",0.0);
-  // const double y_max = if_parameters("grid_parameters/level_set/y_max",0.0);
 
   // acquisizione vertici del dominio originale da file
   for(unsigned int i=0; i<N_vertices; i++)
   {
     xv = if_vertices("vertices", 0.0, 2*i);
     yv = if_vertices("vertices", 0.0, 2*i+1);
-    (vertices.at(i)).second=Point2d<double>(xv,yv);
+    (vertices.at(i)).second = Point2d<double>(xv,yv);
   }
   vertices.at(N_vertices).second=vertices.at(0).second; // ultimo vertice coincide col primo
 
   // Scrittura su file importabile da matlab del dominio reale
   writeout_real_domain(vertices);
 
-  dx = (x_max-x_min)/Nx;
+  dx = (x_max-x_min) / Nx;
   dy = dx;
-  //dy = (y_max-y_min)/Ny;
 
-  const double toll_x = k*dx;
-  const double toll_y = k*dy;
-  this->toll_x = toll_x;
-  this->toll_y = toll_y;
+  toll_x = k*dx;
+  toll_y = k*dy;
 
   //inizializzazione vettori x e y (griglia)
-  for(unsigned int nx=0; nx<Nx+3; nx++)
-        {
-          x.at(nx)=x_min + (nx-1)*dx;
-        }
+  for(std::size_t nx=0; nx < Nx + 3; nx++)
+  {
+    x.at(nx)=x_min - dx + nx*dx;
+  }
 
-        for(unsigned int ny=0; ny<Ny+3; ny++)
-        {
-          y.at(ny)=y_min + (ny-1)*dy;
-        }
+  for(std::size_t ny=0; ny < Ny + 3; ny++)
+  {
+    y.at(ny)=y_min - dy + ny*dy;
+  }
 
-  for (unsigned int iv=0; iv<N_vertices; iv++)
+  for (unsigned int iv=0; iv < N_vertices; iv++)
   {
     Key = IMMERSED_BOUNDARY::find_label(x,y,(vertices.at(iv)).second);
     (vertices.at(iv)).first = Key;
@@ -115,11 +108,9 @@ grid::grid(const std::string& input_f, const std::string& vertices_f, const p_co
 
     if (!((*V).first == (*V_n).first)) // se i vertici non sono nella stessa cella
     {
-    cut_cells(V->first, V->second, V_n->first, V_n->second, toll_x, toll_y, false);
+      cut_cells(V->first, V->second, V_n->first, V_n->second, toll_x, toll_y, false);
     }
   }
-
-  ///////////
 
   last_common_ctrs_part();
 

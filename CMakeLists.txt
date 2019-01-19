@@ -63,3 +63,12 @@ target_include_directories(
   PUBLIC example
   PUBLIC include
   )
+
+target_compile_options(
+  ibfv_example
+  PUBLIC "-Wall"
+  PUBLIC "-Werror"
+  PUBLIC "-g"
+  PUBLIC "-O0"
+
+  )

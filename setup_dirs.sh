@@ -3,6 +3,11 @@
 # Sets up the directories used to store data and results of a simulation. The simulator
 # assumes these directories already exist!
 
+set -u
+set -e
+
+THIS_DIR=$(dirname $)
+
 if [ $# != 1 ]
 then
     echo "Usage: setup_dirs.sh <root_dir>"
@@ -28,3 +33,6 @@ mkdir -p ${ROOT}/data/domain/interp_matrices/dry_no_GP/M6x6
 mkdir -p ${ROOT}/data/domain/interp_matrices/dry_no_GP/non_considered_corner
 mkdir -p ${ROOT}/data/domain/interp_matrices/dry_no_GP/SW_labels
 mkdir -p ${ROOT}/data/unknowns
+
+# copy the input files
+cp ${THIS_DIR}/input_files/* ${ROOT}
