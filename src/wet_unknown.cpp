@@ -32,14 +32,13 @@ wet_unknown::wet_unknown(const wet_unknown& lhs) : unknown_map(lhs.unknown_map){
 
 double& wet_unknown::operator ()(const unsigned int& i, const unsigned int& j)
 {
-	if (unknown_map.find(label(i,j)) == unknown_map.end())
-	{
-		std::cout<< "ERRORE in wet_unknown::operator(): la cella fornita non è bagnata. Non è stato ritornato nessun valore.\n";
-	}
-	else
-	{
-		return unknown_map[label(i,j)];
-	}
+  if (unknown_map.find(label(i,j)) == unknown_map.end())
+  {
+    std::cout<< "ERRORE in wet_unknown::operator(): la cella fornita non è bagnata. Non è stato ritornato nessun valore.\n";
+    throw 1;
+  }
+
+  return unknown_map[label(i,j)];
 }
 
 double& wet_unknown::operator ()(const label& l)
@@ -61,8 +60,3 @@ void wet_unknown::import_unknown(grid & g, const unsigned int& n_unknown)
 		it->second = g.get_unknown_value(it->first, n_unknown);
 	}
 }
-
-
-
-
-

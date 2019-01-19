@@ -15,10 +15,10 @@ void grid::set_wet2()
 	CELL::type current_cell_type = CELL::dry;
 	label current_label, next_label;
 	double x1,x2, y1, y2; // ascisse e ordinate dei vertici del lato considerato
-	double xcv, ycv; // coordinate del vertice centrale (caso particolare entrambe tagliate con vertice centrale sul segmento)
+	double xcv; // coordinate del vertice centrale (caso particolare entrambe tagliate con vertice centrale sul segmento)
 	Point2d<double> cc; // cell center
 	double xc, yc;
-	double x,y, m;
+	double y, m;
 	double temp;
 
 	bool processed;
@@ -230,5 +230,3 @@ void grid::set_wet_cutted_centers()
 		}
 	}
 }
-
-

@@ -36,11 +36,8 @@ const double y_min = if_parameters("grid_parameters/y_min",0.0);
 
 Point2d<double> P, wet_center, dry_center1, dry_center2;
 Point2d<double> zero;
-Point2d<double>* Vertex;
 Point2d<double>* first_Vertex;
-Point2d<double>* last_Vertex;
-int clV;
-IMMERSED_BOUNDARY::position pos, pos2;
+
 label wet_cell, dry_cell;
 label actual_label, next_label;
 label Key, first_wet, first_dry, first_cutted_cell, first_label;
@@ -48,9 +45,8 @@ IMMERSED_BOUNDARY::Edge edge;
 std::map<label,IMMERSED_BOUNDARY::Edge>::iterator it_single_edges;
 int N_single_edges;
 
-bool first_wet_finded = false;
 cell C(N_equations);
-double fun_value, t;
+double fun_value;
 
 dx = (x_max-x_min)/Nx;
 dy = dx; // imposizione celle quadrate
@@ -66,13 +62,19 @@ this->toll_y = 0.01*dy;
 
 //inizializzazione vettori x e y (griglia)
 
-for(int nx=0; nx<Nx+3; nx++) {x.at(nx)=x_min + (nx-1)*dx;}
-for(int ny=0; ny<Ny+3; ny++) {y.at(ny)=y_min + (ny-1)*dy;}
+for(unsigned int nx=0; nx<Nx+3; nx++)
+{
+  x.at(nx)=x_min + (nx-1)*dx;
+}
+for(unsigned int ny=0; ny<Ny+3; ny++)
+{
+  y.at(ny)=y_min + (ny-1)*dy;
+}
 
 // inizializzazione centri cella e impostazione iniziale asciutto/bagnato
-for(int nx=0; nx<Nx+2; nx++)
+for(unsigned int nx=0; nx<Nx+2; nx++)
 {
-	for(int ny=0; ny<Ny+2; ny++)
+	for(unsigned int ny=0; ny<Ny+2; ny++)
 	{
 		Key.set_values(nx,ny);
 		P(0)=x_min+0.5*dx+(nx-1)*dx;
@@ -182,14 +184,14 @@ for (std::map<label,cell>::iterator it=cells.begin(); it!=cells.end(); it++)
 	{
 		// è necessario salvare qui i vettori x e y per la visualizzazione con Matlab
 		OutFile.open("./data/domain/x", std::ios::out);
-		for (int i=0; i<Nx+3; i++)
+		for (unsigned int i=0; i<Nx+3; i++)
 		{
 			OutFile<<x.at(i)<<std::endl;
 		}
 		OutFile.close();
 
 		OutFile.open("./data/domain/y", std::ios::out);
-		for (int i=0; i<Ny+3; i++)
+		for (unsigned int i=0; i<Ny+3; i++)
 		{
 			OutFile<<y.at(i)<<std::endl;
 		}
@@ -325,12 +327,3 @@ int grid::closest_vertex(const Point2d<double>& current_Vertex, const Point2d<do
 		return 1;
 	else return 2;
 }
-
-
-
-
-
-
-
-
-

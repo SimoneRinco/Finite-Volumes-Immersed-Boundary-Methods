@@ -108,8 +108,6 @@ bool grid::get_stencil_values(const label& computation_cell, const unsigned int&
 	label N_label(lx, ly+1);
 	label S_label(lx, ly-1);
 
-	int associated_GP_number;
-
 	if (cells[computation_cell].get_type() == CELL::dry)
 	{
 		return false;
@@ -125,16 +123,25 @@ bool grid::get_stencil_values(const label& computation_cell, const unsigned int&
 	}
 }
 
-bool grid::get_stencil_values(const label& computation_cell, const unsigned int& un, IMMERSED_BOUNDARY::stencil_values& u)
+bool grid::get_stencil_values(
+  const label& computation_cell,
+  const unsigned int& un,
+  IMMERSED_BOUNDARY::stencil_values& u)
 {
-	double u_c = get_unknown_value(computation_cell, un);
-	double u_E, u_W, u_N, u_S;
-	get_stencil_values(computation_cell, un, u_E, u_W, u_N, u_S);
-	u.central = u_c;
-	u.E = u_E;
-	u.W = u_W;
-	u.N = u_N;
-	u.S = u_S;
+  double u_c = get_unknown_value(computation_cell, un);
+  double u_E = 0.0;
+  double u_W = 0.0;
+  double u_N = 0.0;
+  double u_S = 0.0;
+
+  get_stencil_values(computation_cell, un, u_E, u_W, u_N, u_S);
+  u.central = u_c;
+  u.E = u_E;
+  u.W = u_W;
+  u.N = u_N;
+  u.S = u_S;
+
+  return true;
 }
 
 double grid::get_unknown_value(const label& wet_label, const unsigned int& n_unknown)
@@ -167,7 +174,7 @@ double grid::get_unknown_value(const unsigned int& wet_i, const unsigned int& we
 double grid::compute_single_stencil_value(const label& current_label, const label& adj_label, const unsigned int& unknown_number)
 {
 
-	double value;
+	double value = 0.0;
 	int associated_GP_number;
 
 	if (cells[adj_label].get_type() == CELL::wet)
@@ -192,7 +199,7 @@ double grid::compute_single_stencil_value(const label& current_label, const labe
 		std::cout<<"computational cell: ";
 		current_label.print();
 		std::cout<<"associated GP number: " <<associated_GP_number <<std::endl;
-		/**/
+		*/
 
 		if (associated_GP_number == -1)
 		{

@@ -25,7 +25,6 @@ ghost_unknown::ghost_unknown(const ghost_unknown& lhs): unknown_map(lhs.unknown_
 void ghost_unknown::import_unknown(grid& g, const unsigned int& n_unknown)
 {
 	std::vector<ghost_quantities> gq;
-	unsigned int ngq; // number of ghost quantities
 	ghost_value gv;
 
 	for (std::map<label, std::vector<ghost_value> >::iterator it = unknown_map.begin(); it != unknown_map.end(); it++)
@@ -41,4 +40,3 @@ void ghost_unknown::import_unknown(grid& g, const unsigned int& n_unknown)
 		}
 	}
 }
-

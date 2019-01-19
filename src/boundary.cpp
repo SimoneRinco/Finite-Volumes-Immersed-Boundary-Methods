@@ -260,14 +260,10 @@ void boundary::print_edge(const unsigned int& edge_number)
 
 void boundary::print_edges()
 {
-	std::cout<<"### Number of edges: " <<N_edges <<"\n";
+  std::cout<<"### Number of edges: " <<N_edges <<"\n";
 
-	for (int i=1; i<=N_edges; i++)
-	{
-		print_edge(i);
-	}
+  for (unsigned int i=1; i<=N_edges; i++)
+  {
+    print_edge(i);
+  }
 }
-
-
-
-

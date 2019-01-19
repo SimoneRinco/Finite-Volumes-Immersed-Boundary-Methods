@@ -48,7 +48,7 @@ void grid::cut_cells( const label& actual_label, Point2d<double>& actual_vertex,
 		std::cout<<"mi muovo a ";
 		std::cout<<V_n_pos <<"\n";
 		std::cout<<"### end cut_cells ###\n";
-		/**/
+		*/
 		switch (V_n_pos)
 		{
 		case (N):
@@ -311,6 +311,9 @@ void grid::cut_cells( const label& actual_label, Point2d<double>& actual_vertex,
 			if (new_label==finish_label) {exit=true;}
 		break;
 
+                case Intern:
+                  throw 1;
+
 		} // end switch
 
 
@@ -320,7 +323,7 @@ void grid::cut_cells( const label& actual_label, Point2d<double>& actual_vertex,
 	} // end if (exit==false)
 	else
 	{
-		position V_pos = V_position(finish_label, actual_vertex);
+		V_position(finish_label, actual_vertex);
 		ccb.set_edge_vertex(BOUNDARY::right, actual_vertex, ccb.get_N_edges());
 	}
 } // end method

@@ -1,8 +1,8 @@
-I_DIR = ../include 
+I_DIR = ../include
 LIB_DIR = ../lib
 LIB_NAME = libgrid.a
 
-FLAGS = -O2 -pg
+FLAGS = -O3 -g -Wall -Werror
 
 GRID_OBJS = compare.o cell.o boundary.o grid.o find_label.o relative_position.o errors.o \
 		grid_writeout.o grid_valid_edge.o grid_move_vertices.o grid_set_wet.o grid_set_cut.o \
@@ -16,13 +16,14 @@ GRID_OBJS = compare.o cell.o boundary.o grid.o find_label.o relative_position.o 
 		grid_calculate_RP_quantities.o grid_calculate_GP_quantities.o \
 		grid_boundary_conditions.o \
 		wet_unknown.o ghost_unknown.o unknown.o
-		
-lib: $(GRID_OBJS)
-	ar -cr $(LIB_DIR)/$(LIB_NAME) $^ 
 
-clean: 
-	-rm *.o
-	-rm $(LIB_DIR)/*
+lib: $(GRID_OBJS)
+	mkdir -p $(LIB_DIR)
+	ar -cr $(LIB_DIR)/$(LIB_NAME) $^
+
+clean:
+	-rm -rf *.o
+	-rm -rf $(LIB_DIR)/*
 
 $(GRID_OBJS): %.o : %.cpp
-	g++ -c $< -I$(I_DIR) $(FLAGS)		
+	g++ -c $< -I$(I_DIR) $(FLAGS)

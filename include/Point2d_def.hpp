@@ -12,7 +12,10 @@
 #include <iostream>
 
 template <typename T>
-Point2d<T>::Point2d(){}
+Point2d<T>::Point2d()
+: first(T())
+, second(T())
+{}
 
 template <typename T>
 Point2d<T>::Point2d(const T& first,const T& second): first(first), second(second) {}
@@ -45,15 +48,31 @@ bool Point2d<T>::operator==(const Point2d<T>& lhs) const
 template<typename T>
 T& Point2d<T>::operator()(const int& i)
 {
-	if (i==0) return this->first;
-	if (i==1) return this->second;
+  if (i==0)
+  {
+    return this->first;
+  }
+  else if (i==1)
+  {
+    return this->second;
+  }
+
+  throw 1;
 }
 
 template<typename T>
 const T& Point2d<T>::operator()(const int& i) const
 {
-	if (i==0) return this->first;
-	if (i==1) return this->second;
+  if (i==0)
+  {
+    return this->first;
+  }
+  else if (i==1)
+  {
+    return this->second;
+  }
+
+  throw 1;
 }
 
 

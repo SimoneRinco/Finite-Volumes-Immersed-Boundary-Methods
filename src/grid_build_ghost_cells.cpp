@@ -69,8 +69,6 @@ void grid::build_single_BP_quantities(const label& ghost_label, const label& wet
 	bool BP_and_cV_very_close;
 	int close_vertex;
 
-	char a;
-
 	ghost_quantities gq;
 
 	edge_number = ccb.get_n_edge(wet_label);
@@ -224,7 +222,7 @@ void grid::build_ghost_cells()
 				/*
 				std::cout<<"aggiunta ghost cell ";
 				label(i,j).print();
-				/**/
+				*/
 				ghost_cells.insert(std::pair<label,ghost_cell>(label(i,j),new_ghost_cell));
 
 			}

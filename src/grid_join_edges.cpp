@@ -14,8 +14,6 @@ void grid::join_edges(const label& current_label, Point2d<double>*& current_Vert
 
 using namespace IMMERSED_BOUNDARY;
 
-char a; // variabile per debug
-
 position current_vertex_pos; // posizione all'interno della propria cella (current_label) del vertice da unire
 position next_cutted_cell_pos; // posizione della cella contenente il vertice più vicino rispetto alla cella corrente
 position next_vertex_pos = Intern; // posizione all'interno della propria cella (adj_label) del vertice più vicino
@@ -24,7 +22,6 @@ label next_label;
 Point2d<double>* next_Vertex = 0; // vertice da unire al current_Vertex
 Point2d<double>* new_Vertex = 0; // nuovo vertice che dovrà essere unito (altro vertice della cella che contiene next_Vertex)
 std::map<label,Edge>::iterator it_single_edges;
-int clV;
 
 // coordinate x e y della cella corrente
 const double& Lx = x.at(current_label(0));
@@ -89,7 +86,7 @@ std::cout<< "new vertex: ";
 new_Vertex->print();
 std::cout<<"current vertex pos: " <<current_vertex_pos << "; next cutted cell pos: " <<next_cutted_cell_pos <<"; next vertex pos: " <<next_vertex_pos <<"\n";
 //std::cin>> a;
-/**/
+*/
 
 switch(current_vertex_pos)
 {
@@ -152,7 +149,8 @@ case N:
 			throw ERRORS::errors(103);
 		}
 	break;
-
+        case Intern:
+          break;
 	default:;
 	}
 
@@ -427,6 +425,9 @@ case NW:
 		throw ERRORS::errors(119);
 	}
 break;
+
+case Intern:
+  throw 1;
 //////////////////////////////////////////////////////////////
 
 
@@ -494,14 +495,14 @@ void grid::closest_cell_pos_and_vertices(const label& current_label, Point2d<dou
 		// è necessario salvare qui i vettori x e y per la visualizzazione con Matlab
 		std::ofstream OutFile;
 		OutFile.open("./data/domain/x", std::ios::out);
-		for (int i=0; i<Nx+3; i++)
+		for (unsigned int i=0; i<Nx+3; i++)
 		{
 			OutFile<<x.at(i)<<std::endl;
 		}
 		OutFile.close();
 
 		OutFile.open("./data/domain/y", std::ios::out);
-		for (int i=0; i<Ny+3; i++)
+		for (unsigned int i=0; i<Ny+3; i++)
 		{
 			OutFile<<y.at(i)<<std::endl;
 		}
@@ -564,4 +565,3 @@ if ((single_edges.find(adj_label) != single_edges.end()) && (considered_labels.f
 } // end if
 
 } // end function
-

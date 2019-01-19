@@ -102,9 +102,8 @@ public:
 
 class ghost_cell : public cell
 {
-	unsigned int number_adj_wet_cells;
-	std::vector<ghost_quantities> GQs;
-
+  unsigned int number_adj_wet_cells;
+  std::vector<ghost_quantities> GQs;
 
 public:
 	ghost_cell();
