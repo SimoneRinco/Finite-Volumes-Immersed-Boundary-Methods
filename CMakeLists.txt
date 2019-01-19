@@ -36,7 +36,7 @@ add_executable(
   src/grid_ctr_level_set.cpp
   src/grid_ctr_vertices.cpp
   src/grid_cut_cells.cpp
-  src/grid_cutted_center.cpp
+  src/grid_cut_center.cpp
   src/grid_join_edges.cpp
   src/grid_last_common_ctrs_part.cpp
   src/grid_move_vertices.cpp

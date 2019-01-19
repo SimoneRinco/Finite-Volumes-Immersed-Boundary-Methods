@@ -28,7 +28,7 @@ int main(int argc, char **argv)
   unsigned int n_frame = 0;
   const double CFL = 0.5;
   const double dx = G.get_dx(), dy = G.get_dy();
-  const double t_final = 5.0;
+  const double t_final = 1.0;
   const double dt_out = 0.1;
   double t = 0.0;
   double dt;
