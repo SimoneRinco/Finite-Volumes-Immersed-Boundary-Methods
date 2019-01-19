@@ -2,7 +2,7 @@ I_DIR = ../include
 LIB_DIR = ../lib
 LIB_NAME = libgrid.a
 
-FLAGS = -O3 -g -Wall -Werror
+FLAGS = -O0 -g -Wall -Werror
 
 GRID_OBJS = compare.o cell.o boundary.o grid.o find_label.o relative_position.o errors.o \
 		grid_writeout.o grid_valid_edge.o grid_move_vertices.o grid_set_wet.o grid_set_cut.o \

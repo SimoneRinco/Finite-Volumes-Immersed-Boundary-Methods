@@ -9,7 +9,7 @@ LIB_DIR = ../lib
 LIBNAME = grid
 LIB = $(LIB_DIR)/lib$(LIBNAME).a
 
-FLAGS = -O3 -g -Wall -Werror
+FLAGS = -O0 -g -Wall -Werror
 
 # Nome del sorgente di prova (il main): l'eseguibile avrà lo stesso nome
 EXAMPLE = example

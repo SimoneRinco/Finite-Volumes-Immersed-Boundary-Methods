@@ -13,11 +13,11 @@ T2 = use_grid2
 T3 = use_unknown
 
 all:
-	g++ -c  $(T1).cpp -I $(I_DIR)
+	g++ -c  $(T1).cpp -I $(I_DIR) -g
 	g++ -o $(T1) $(T1).o -L $(LIB_DIR) -l $(LIBNAME)
-	g++ -c  $(T2).cpp -I $(I_DIR)
+	g++ -c  $(T2).cpp -I $(I_DIR) -g
 	g++ -o $(T2) $(T2).o -L $(LIB_DIR) -l $(LIBNAME)
-	g++ -c  $(T3).cpp -I $(I_DIR)
+	g++ -c  $(T3).cpp -I $(I_DIR) -g
 	g++ -o $(T3) $(T3).o -L $(LIB_DIR) -l $(LIBNAME)
 
 clean:
