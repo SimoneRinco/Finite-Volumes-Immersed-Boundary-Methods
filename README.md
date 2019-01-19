@@ -1,9 +1,10 @@
-#Finite-Volumes-Immersed-Boundary-Methods
+# Finite-Volumes-Immersed-Boundary-Methods
 
 This project contains the code of my Master thesis about Immersed Boundary Finite Volumes Methods applied to the Shallow Waters system.
 The thesis can be found [here](https://www.politesi.polimi.it/handle/10589/51682?mode=full) (in Italian, sorry about that).
 
 The code you see here is just intended to show what I did. By no means it aims to be used as it is, as it is very poorly designed (and also extremely inefficient). But it works and you can play with the Shallow Waters system changing the domain shape, the mesh and the initial conditions.
+The code has been tested on Linux only and compiled with gcc 7.3.0.
 In order to build the example to the following:
 
 ```bash
