@@ -30,10 +30,6 @@ void FINITE_VOLUME::H_flux(const triplet& plus, const triplet& minus, double3& H
 	f_p.print();
 	cout<<"f_m n";
 	f_m.print();
-	/**/
+	*/
 	H = (f_p + f_m)*0.5 - (u_p - u_m)*(0.5*a);
 }
-
-
-
-

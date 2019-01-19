@@ -47,7 +47,7 @@ void FINITE_VOLUME::C_flux(const triplet& uc, const interfaces_values& intern_in
 	cout<<"-->u_Sm\n";
 	u_Sm.print();
 	cout<< "#########################\n";
-	/**/
+	*/
 
 	double3 Hx_p, Hx_m, Hy_p, Hy_m;
 
@@ -82,6 +82,5 @@ void FINITE_VOLUME::C_flux(const triplet& uc, const interfaces_values& intern_in
 	cout<<"##\n";
 	cout<<"C flux:\n";
 	C.print();
-	/**/
+	*/
 }
-

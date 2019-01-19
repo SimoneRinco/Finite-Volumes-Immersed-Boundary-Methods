@@ -22,7 +22,7 @@ void FINITE_VOLUME::reconstruction(grid& g, cell_unknown& z, cell_unknown& Qx, \
 				<<", " <<z.central.get_stencil_value(*it,unknown_position::W) \
 				<<", " <<z.central.get_stencil_value(*it,unknown_position::N) \
 				<<", " <<z.central.get_stencil_value(*it,unknown_position::S) <<endl;
-		/**/
+		*/
 
 		// calcolo valori interfaccia interna;
 		cell_reconstruction(z_sv, z.E(*it), z.W(*it), z.N(*it), z.S(*it));
@@ -34,4 +34,3 @@ void FINITE_VOLUME::reconstruction(grid& g, cell_unknown& z, cell_unknown& Qx, \
 		cell_reconstruction(Qy_sv, Qy.E(*it), Qy.W(*it), Qy.N(*it), Qy.S(*it));
 	}
 }
-

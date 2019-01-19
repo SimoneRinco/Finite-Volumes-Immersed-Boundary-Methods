@@ -10,7 +10,7 @@ namespace INITIAL_CONDITIONS
 			return 2.0;
 		else
 			return 1.0;
-			/**/
+		*/
 
 		if(P(0)<-5.0)
 			return 2.0;

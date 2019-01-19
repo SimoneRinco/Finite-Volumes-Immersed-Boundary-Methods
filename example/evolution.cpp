@@ -9,8 +9,6 @@ void FINITE_VOLUME::evolution(cell_unknown& z, cell_unknown& Qx, \
 	using namespace IMMERSED_BOUNDARY;
 	using namespace FINITE_VOLUME;
 
-	char a;
-
 	// u_c: medie di cella u(j,k)
 	// u_Em = u(j+1/2,k)^-, ... , u_Sp = u(j,k-1/2)^+
 	for (std::vector<label>::const_iterator it=WC.begin(); it!=WC.end(); it++)
@@ -20,7 +18,7 @@ void FINITE_VOLUME::evolution(cell_unknown& z, cell_unknown& Qx, \
 		//std::cin >> a;
 		std::cout<<"Computational cell: ";
 		it->print();
-		/**/
+		*/
 		// medie di cella
 		const triplet u_c(z.central, Qx.central, Qy.central, *it);
 
