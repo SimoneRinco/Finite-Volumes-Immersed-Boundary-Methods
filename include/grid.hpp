@@ -75,23 +75,51 @@ public:
   bool is_wet(const unsigned int& i, const unsigned int& j) const;
   unsigned int get_N_edges();
   unsigned int get_BC_type(const unsigned int& edge_number);
-  bool get_stencil_values(const label& computation_cell, const unsigned int& unknown_number, double& EST_value, double& WEST_value, double& NORD_value, double& SUD_value);
-  bool get_stencil_values(const label& computation_cell, const unsigned int& un, IMMERSED_BOUNDARY::stencil_values& u);
-  double get_unknown_value(const label& wet_cell_label, const unsigned int& n_unknown);
-  double get_unknown_value(const unsigned int& wet_i, const unsigned int& wet_j, const unsigned int& n_unknown);
 
-  void set_unknown_values(const label& cell_label, const unsigned int& unknown_number, const double& unknown_value);
-  void set_unknown_values(IMMERSED_BOUNDARY::p_fun pf, const unsigned int& unknown_number);
-  void set_unknown_values(const std::map<label, std::vector<double> >& wet_unknowns);
+  bool get_stencil_values(
+    const label& computation_cell,
+    const unsigned int unknown_number,
+    double& east_value,
+    double& west_value,
+    double& north_value,
+    double& south_value);
+
+  bool get_stencil_values(
+    const label& computation_cell,
+    const unsigned int un,
+    IMMERSED_BOUNDARY::stencil_values& u);
+
+  double get_unknown_value(const label& wet_cell_label, const unsigned int& n_unknown);
+
+  double get_unknown_value(
+    const unsigned int wet_i,
+    const unsigned int wet_j,
+    const unsigned int n_unknown);
+
+  void set_unknown_values(
+    const label& cell_label,
+    const unsigned int unknown_number,
+    const double unknown_value);
+
+  void set_unknown_values(
+    IMMERSED_BOUNDARY::p_fun pf,
+    const unsigned int unknown_number);
+
+  void set_unknown_values(const std::map<label, std::vector<double>>& wet_unknowns);
+
   void set_BC_type(const unsigned int& BC_type);
-  void set_BC_type(const unsigned int& first_edge_number, const unsigned int& last_edge_number, const unsigned int& BC_type);
+
+  void set_BC_type(
+    const unsigned int first_edge_number,
+    const unsigned int last_edge_number,
+    const unsigned int BC_type);
 
 private:
 
   GetPot if_parameters;
   GetPot if_vertices;
 
-  unsigned int Nx; // number of effective cells in x direction (total cells: Nx + 2 not cutted and dry cells)
+  unsigned int Nx; // number of effective cells in x direction (total cells: Nx + 2 not cut and dry cells)
   unsigned int Ny;
   double dx, dy;
   double toll_x, toll_y;
@@ -130,26 +158,90 @@ private:
   bool is_point_in_cell(const Point2d<double>&, const label &);
   bool cutted_center(const label&);
   bool cutted_center_by_diagonal(const label&);
-  IMMERSED_BOUNDARY::Edge build_edge(const Point2d<double>& zero, const label& wet_cell, const IMMERSED_BOUNDARY::p_fun& p_f, const IMMERSED_BOUNDARY::p_grad_fun& p_grad_f);
-  void build_and_add_edge(const label& wet_label, const label& dry_label, const bool& move_vertical, const double& toll, const IMMERSED_BOUNDARY::p_fun& p_f, const IMMERSED_BOUNDARY::p_grad_fun p_grad_f, std::map<label, IMMERSED_BOUNDARY::Edge, p_comp>& single_edges);
-  void build_and_add_edge2(const label& wet_label, const label& vertical_dry_label, const label& orizontal_dry_label, const IMMERSED_BOUNDARY::p_fun& p_f, const IMMERSED_BOUNDARY::p_grad_fun& p_grad_f, std::map<label, IMMERSED_BOUNDARY::Edge, p_comp>& single_edges);
-  int closest_vertex(const Point2d<double>& current_Vertex, const Point2d<double>& V1, const Point2d<double>& V2);
-  void join_edges(const label& current_label, Point2d<double>*& current_Vertex, std::map<label, IMMERSED_BOUNDARY::Edge, p_comp>& single_edges, int& N_single_edges, std::set<label,p_comp>& considered_labels);
-  void next_and_new_vertex(const Point2d<double>& current_V, Point2d<double>& V1, Point2d<double>& V2, Point2d<double>*& new_V, Point2d<double>*& next_V);
-  void closest_cell_pos_and_vertices(const label& current_label, Point2d<double>*& current_Vertex, Point2d<double>*& next_Vertex, Point2d<double>*& new_Vertex, IMMERSED_BOUNDARY::position& next_cell_pos, IMMERSED_BOUNDARY::position& next_Vertex_pos, std::map<label, IMMERSED_BOUNDARY::Edge, p_comp>& single_edges, std::set<label,p_comp>& considered_labels);
+
+  IMMERSED_BOUNDARY::Edge build_edge(
+    const Point2d<double>& zero,
+    const label& wet_cell,
+    const IMMERSED_BOUNDARY::p_fun& p_f,
+    const IMMERSED_BOUNDARY::p_grad_fun& p_grad_f);
+
+  void build_and_add_edge(
+    const label& wet_label,
+    const label& dry_label,
+    const bool& move_vertical,
+    const double& toll,
+    const IMMERSED_BOUNDARY::p_fun& p_f,
+    const IMMERSED_BOUNDARY::p_grad_fun p_grad_f,
+    std::map<label, IMMERSED_BOUNDARY::Edge, p_comp>& single_edges);
+
+  void build_and_add_edge2(
+    const label& wet_label,
+    const label& vertical_dry_label,
+    const label& orizontal_dry_label,
+    const IMMERSED_BOUNDARY::p_fun& p_f,
+    const IMMERSED_BOUNDARY::p_grad_fun& p_grad_f,
+    std::map<label, IMMERSED_BOUNDARY::Edge, p_comp>& single_edges);
+
+  int closest_vertex(
+    const Point2d<double>& current_Vertex,
+    const Point2d<double>& V1,
+    const Point2d<double>& V2);
+
+  void join_edges(
+    const label& current_label,
+    Point2d<double>*& current_Vertex,
+    std::map<label, IMMERSED_BOUNDARY::Edge, p_comp>& single_edges,
+    int& N_single_edges,
+    std::set<label,p_comp>& considered_labels);
+
+  void next_and_new_vertex(
+    const Point2d<double>& current_V,
+    Point2d<double>& V1,
+    Point2d<double>& V2,
+    Point2d<double>*& new_V,
+    Point2d<double>*& next_V);
+
+  void closest_cell_pos_and_vertices(
+    const label& current_label,
+    Point2d<double>*& current_Vertex,
+    Point2d<double>*& next_Vertex,
+    Point2d<double>*& new_Vertex,
+    IMMERSED_BOUNDARY::position& next_cell_pos,
+    IMMERSED_BOUNDARY::position& next_Vertex_pos,
+    std::map<label, IMMERSED_BOUNDARY::Edge, p_comp>& single_edges,
+    std::set<label,p_comp>& considered_labels);
+
   void build_ghost_cells();
+
   label find_SW_label(const Point2d<double>& RP);
+
   unsigned int find_number_ghost_corners(const label& SW_label);
-  void build_single_BP_quantities(const label& ghost_cell, const label& wet_label, ghost_quantities CGgq, std::vector<ghost_quantities>& gqs);
+
+  void build_single_BP_quantities(
+    const label& ghost_cell,
+    const label& wet_label,
+    ghost_quantities CGgq,
+    std::vector<ghost_quantities>& gqs);
+
   void build_interpolation_matrices();
+
   IMMERSED_BOUNDARY::M4_LU build_all_wet_4x4_matrix(const label&);
   IMMERSED_BOUNDARY::M8_LU build_GPs_8x8_matrix(const label&);
   IMMERSED_BOUNDARY::M4_LU build_GPs_4x4_matrix(const label&);
-  IMMERSED_BOUNDARY::M6_LU build_noGPs_6x6_matrix(const label&, unsigned int& non_considered_corner);
+  IMMERSED_BOUNDARY::M6_LU build_noGPs_6x6_matrix(
+    const label&,
+    unsigned int& non_considered_corner);
+
   IMMERSED_BOUNDARY::M3_LU build_noGPs_3x3_matrix(const label&);
+
   void calculate_RP_quantities();
   void calculate_GP_quantities();
-  double compute_single_stencil_value(const label& current_label, const label& adj_label, const unsigned int& unknown_number);
-  void writeout_real_domain(const std::vector<std::pair<label, Point2d<double> > >& real_vertices);
 
+  double compute_single_stencil_value(
+    const label& current_label,
+    const label& adj_label,
+    const unsigned int& unknown_number);
+
+  void writeout_real_domain(
+    const std::vector<std::pair<label, Point2d<double>>>& real_vertices);
 };
