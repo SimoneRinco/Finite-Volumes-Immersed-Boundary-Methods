@@ -42,9 +42,11 @@ public:
 
   // writeout functions (write on files)
 
-  void writeout_domain(const bool& save_interp_matrices = true);
+  /*!
+   * out_dir: top directory where all the results are saved (created with setup_dirs.sh)
+   */
+  void writeout_domain(const std::string& out_dir, bool save_interp_matrices);
   void writeout_BC_type();
-  //void writeout_unknowns(const std::string& file_name = "./data/unknowns/unknowns");
   void writeout_unknowns(const std::string& file_name);
 
   // print functions

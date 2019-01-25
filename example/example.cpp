@@ -49,7 +49,7 @@ int main(int argc, char **argv)
   unknown new_Qy(G,3);
 
   ///////////////
-  G.writeout_domain(); // salvataggio in ./data/domain
+  G.writeout_domain(data_dir, true);
   // Imposizione delle condizioni iniziali in G
   initial_conditions(G);
 
