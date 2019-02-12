@@ -1,5 +1,7 @@
 # Finite-Volumes-Immersed-Boundary-Methods
 
+![Shallow Waters simulation in a closed square domain](http://drive.google.com/uc?export=view&id=1IKWfdbEJSSS_s2WbxxoCXjJ7n9foWJra)
+
 This project contains the code of my Master thesis about Immersed Boundary Finite Volumes Methods applied to the Shallow Waters system.
 The thesis can be found [here](https://www.politesi.polimi.it/handle/10589/51682?mode=full) (in Italian, sorry about that).
 
@@ -32,5 +34,5 @@ cd build
 
 The output files with water height, Qx and Qy are stored in ```mydata/unknowns```.
 The matlab scripts in the ```m_files``` directory contain the code that parses the simulation output files and plots the domain,
-the cells and figures of the solution for each frame. I don't have a Matlab license at the moment, so I can't tell you exactly
-how to use the scripts (TODO: use matplotlib instead?).
+the cells and figures of the solution for each frame.
+
