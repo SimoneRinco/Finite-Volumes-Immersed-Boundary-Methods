@@ -1,4 +1,4 @@
-# sysel: A finite volumes immersed boundary solver
+# sysel: a finite volumes immersed boundary solver
 
 ![Shallow Waters simulation in a closed square domain](http://drive.google.com/uc?export=view&id=1IKWfdbEJSSS_s2WbxxoCXjJ7n9foWJra)
 
